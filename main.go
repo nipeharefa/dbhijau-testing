@@ -2,6 +2,7 @@ package demo
 
 import (
 	"context"
+	"os"
 
 	"github.com/arangodb/go-driver"
 	drviverHttp "github.com/arangodb/go-driver/http"
@@ -10,9 +11,13 @@ import (
 // ExampleNewClient shows how to create the simple client with a single endpoint
 // By default, the client will use the http.DefaultTransport configuration
 func ExampleNewClient() (string, error) {
+	dbbURL := os.Getenv("DB_URL")
+	if dbbURL == "" {
+		dbbURL = "http://localhost:8529"
+	}
 	// Create an HTTP connection to the database
 	conn, err := drviverHttp.NewConnection(drviverHttp.ConnectionConfig{
-		Endpoints: []string{"http://localhost:8529"},
+		Endpoints: []string{dbbURL},
 	})
 	if err != nil {
 		// log.Fatalf("Failed to create HTTP connection: %v", err)

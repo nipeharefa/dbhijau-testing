@@ -6,15 +6,25 @@ func TestExampleNewClient(t *testing.T) {
 	tests := []struct {
 		name    string
 		want    string
+		setEnv  func(*testing.T)
 		wantErr bool
 	}{
 		{
-			name: "Test connection",
-			want: "arango",
+			name: "Test connection fail",
+			setEnv: func(t *testing.T) {
+				t.Setenv("DB_URL", "http://localhost:8519")
+			},
+			wantErr: true,
+		},
+		{
+			name:    "Test connection",
+			setEnv:  func(t *testing.T) {},
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			tt.setEnv(t)
 			got, err := ExampleNewClient()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ExampleNewClient() error = %v, wantErr %v", err, tt.wantErr)
