@@ -33,7 +33,6 @@ func ExampleNewClient() (string, error) {
 	// Ask the version of the server
 	versionInfo, err := c.Version(context.TODO())
 	if err != nil {
-		// log.Fatalf("Failed to get version info: %v", err)
 		return "", err
 	}
 	// fmt.Printf("Database has version '%s' and license '%s'\n", versionInfo.Version, versionInfo.License)

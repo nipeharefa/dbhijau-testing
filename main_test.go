@@ -12,14 +12,14 @@ func TestExampleNewClient(t *testing.T) {
 		{
 			name: "Test connection fail",
 			setEnv: func(t *testing.T) {
-				t.Setenv("DB_URL", "http://localhost:8519")
+				t.Setenv("DB_URL", "http://badurl")
 			},
 			wantErr: true,
 		},
 		{
-			name:    "Test connection",
-			setEnv:  func(t *testing.T) {},
-			wantErr: true,
+			name:   "Test connection success",
+			setEnv: func(t *testing.T) {},
+			want:   "arango",
 		},
 	}
 	for _, tt := range tests {
